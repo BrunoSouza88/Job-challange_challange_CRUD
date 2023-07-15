@@ -54,9 +54,7 @@ th {
 }
 
 .edit-button, .delete-button {
-  padding: 5px 10px;
   margin: 2px;
-
 }
 
 .edit-button, .delete-button, #edit-submit, [type="submit"] {
@@ -65,7 +63,7 @@ th {
     border: 1px solid #979494;
     padding: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 .edit-button:hover, .delete-button:hover, #edit-submit:hover, [type="submit"]:hover {
