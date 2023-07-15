@@ -12,43 +12,58 @@ if ($conn->connect_error) {
 
 $action = $_POST['action'];
 
-switch ($action) {
-  case 'create':
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $sql = "INSERT INTO tasks (title, description, status) VALUES ('$title', '$description', 'pending')";
-    $conn->query($sql);
-    break;
-  case 'read':
-    $sql = "SELECT * FROM todolist.tasks";
-    $result = $conn->query($sql);
-    $tasks = array();
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-        $tasks[] = array(
-          'id' => $row['id'],
-          'title' => $row['title'],
-          'description' => $row['description'],
-          'status' => $row['status']
-        );
-      }
+if ($action == 'create') {
+  createTask();
+} elseif ($action == 'read') {
+  readTasks();
+} elseif ($action == 'update') {
+  updateTask();
+} elseif ($action == 'delete') {
+  deleteTask();
+}
+
+function createTask() {
+  global $conn;
+  $title = $_POST['title'];
+  $description = $_POST['description'];
+  $status = 'pending';
+  $sql = "INSERT INTO tasks (title, description, status) VALUES ('$title', '$description', '$status')";
+  $conn->query($sql);
+}
+
+function readTasks() {
+  global $conn;
+  $sql = "SELECT * FROM tasks";
+  $result = $conn->query($sql);
+  $tasks = array();
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $tasks[] = array(
+        'id' => $row['id'],
+        'title' => $row['title'],
+        'description' => $row['description'],
+        'status' => $row['status']
+      );
     }
-    var_dump($tasks);
-    echo json_encode($tasks);
-    break;
-  case 'update':
-    $taskId = $_POST['id'];
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $status = $_POST['status'];
-    $sql = "UPDATE tasks SET title = '$title', description = '$description', status = '$status' WHERE id = $taskId";
-    $conn->query($sql);
-    break;
-  case 'delete':
-    $taskId = $_POST['id'];
-    $sql = "DELETE FROM tasks WHERE id = $taskId";
-    $conn->query($sql);
-    break;
+  }
+  echo json_encode($tasks);
+}
+
+function updateTask() {
+  global $conn;
+  $taskId = $_POST['id'];
+  $title = $_POST['title'];
+  $description = $_POST['description'];
+  $status = $_POST['status'];
+  $sql = "UPDATE tasks SET title = '$title', description = '$description', status = '$status' WHERE id = $taskId";
+  $conn->query($sql);
+}
+
+function deleteTask() {
+  global $conn;
+  $taskId = $_POST['id'];
+  $sql = "DELETE FROM tasks WHERE id = $taskId";
+  $conn->query($sql);
 }
 
 $conn->close();

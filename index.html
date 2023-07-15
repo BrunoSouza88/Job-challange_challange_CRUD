@@ -13,6 +13,15 @@
     <input type="text" id="description" placeholder="Description" required>
     <button type="submit">Add Task</button>
   </form>
+
+  <!-- New form for editing tasks -->
+  <form id="edit-form">
+    <input type="hidden" id="edit-task-id">
+    <input type="text" id="edit-title" placeholder="Title" required>
+    <input type="text" id="edit-description" placeholder="Description" required>
+    <button type="submit" id="edit-submit">Update Task</button>
+  </form>
+
   <table id="task-table">
     <thead>
       <tr>
@@ -23,6 +32,7 @@
     </thead>
     <tbody id="task-list"></tbody>
   </table>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="script.js"></script>
 </body>
