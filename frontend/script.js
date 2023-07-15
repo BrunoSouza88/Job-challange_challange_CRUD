@@ -37,6 +37,16 @@ $(document).ready(function() {
   }
 
   function renderTasks(tasks) {
+    tasks.sort(function(a, b) {
+      if (a.status === 'completed' && b.status === 'pending') {
+        return -1;
+      } else if (a.status === 'pending' && b.status === 'completed') {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    
     $('#task-list').empty();
     tasks.forEach(function(task) {
       let tr = $('<tr>').attr('data-id', task.id);
@@ -57,6 +67,7 @@ $(document).ready(function() {
       $('#task-list').append(tr);
     });
   }
+  
 
   $(document).on('click', '.edit-button', function() {
     let tr = $(this).closest('tr');

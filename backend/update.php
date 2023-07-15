@@ -11,16 +11,21 @@ if ($conn->connect_error) {
 }
 
 $taskId = $_POST['id'];
-$title = $_POST['title'];
-$description = $_POST['description'];
 $status = $_POST['status'];
-error_log(print_r($_POST, true));
-$sql = "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sssi", $title, $description, $status, $taskId);
+if (isset($_POST['title']) && isset($_POST['description'])) {
+  $title = $_POST['title'];
+  $description = $_POST['description'];
+  $sql = "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sssi", $title, $description, $status, $taskId);
+} else {
+  $sql = "UPDATE tasks SET status = ? WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("si", $status, $taskId);
+}
+
 $stmt->execute();
-
 $stmt->close();
 $conn->close();
 ?>
