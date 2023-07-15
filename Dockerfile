@@ -1,7 +1,5 @@
-FROM mysql:8.0
+FROM php:7.4-apache
 
-ENV MYSQL_DATABASE todolist
-ENV MYSQL_USER=root
-ENV MYSQL_ROOT_PASSWORD password_test
+RUN docker-php-ext-install mysqli
 
-COPY setup.sql /docker-entrypoint-initdb.d/
+COPY . /var/www/html/

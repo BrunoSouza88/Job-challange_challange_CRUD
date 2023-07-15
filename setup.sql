@@ -4,3 +4,4 @@ CREATE TABLE tasks (
   description TEXT,
   status ENUM('pending', 'completed') NOT NULL
 );
+

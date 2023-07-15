@@ -1,6 +1,5 @@
 $(document).ready(function() {
   loadTasks();
-
   $('#task-form').submit(function(event) {
     event.preventDefault();
     let title = $('#title').val();
@@ -17,18 +16,10 @@ $(document).ready(function() {
       data: { action: 'read' },
       success: function(response) {
         let tasks = JSON.parse(response);
-        $('#task-list').empty();
-        tasks.forEach(function(task) {
-          let row = $('<tr>').attr('data-id', task.id);
-          let title = $('<td>').text(task.title);
-          let description = $('<td>').text(task.description);
-          let actions = $('<td>');
-          let editButton = $('<button>').text('Edit').addClass('edit-button');
-          let deleteButton = $('<button>').text('Delete').addClass('delete-button');
-          actions.append(editButton, deleteButton);
-          row.append(title, description, actions);
-          $('#task-list').append(row);
-        });
+        renderTasks(tasks);
+      },
+      error: function(_jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
       }
     });
   }
@@ -48,18 +39,32 @@ $(document).ready(function() {
     });
   }
 
+  function renderTasks(tasks) {
+    $('#task-list').empty();
+    tasks.forEach(function(task) {
+      let li = $('<li>').attr('data-id', task.id);
+      let title = $('<span>').text(task.title);
+      let description = $('<span>').text(task.description);
+      let actions = $('<span>');
+      let editButton = $('<button>').text('Edit').addClass('edit-button');
+      let deleteButton = $('<button>').text('Delete').addClass('delete-button');
+      actions.append(editButton, deleteButton);
+      li.append(title, description, actions);
+      $('#task-list').append(li);
+    });
+  }
+
   $(document).on('click', '.edit-button', function() {
-    let row = $(this).closest('tr');
-    let taskId = row.attr('data-id');
-    let title = row.find('td').eq(0).text();
-    let description = row.find('td').eq(1).text();
+    let li = $(this).closest('li');
+    let taskId = li.attr('data-id');
+    let title = li.find('span').eq(0).text();
+    let description = li.find('span').eq(1).text();
   });
 
-  // Quando o formulário de edição for enviado
   $('#edit-form').submit(function(event) {
     event.preventDefault();
-    let taskId = $(this).closest('tr').attr('data-id');
-    let title =  $('#title').val();
+    let taskId = $(this).closest('li').attr('data-id');
+    let title = $('#title').val();
     let description = $('#description').val();
     $.ajax({
       url: 'backend.php',
@@ -78,8 +83,8 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.delete-button', function() {
-    let row = $(this).closest('tr');
-    let taskId = row.attr('data-id');
+    let li = $(this).closest('li');
+    let taskId = li.attr('data-id');
     $.ajax({
       url: 'backend.php',
       type: 'POST',
@@ -88,7 +93,7 @@ $(document).ready(function() {
         id: taskId
       },
       success: function() {
-        row.remove();
+        li.remove();
       }
     });
   });
