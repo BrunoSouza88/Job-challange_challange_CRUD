@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   function loadTasks() {
     $.ajax({
-      url: 'read.php',
+      url: '../backend/read.php',
       type: 'GET',
       success: function(response) {
         let tasks = JSON.parse(response);
@@ -24,7 +24,7 @@ $(document).ready(function() {
 
   function addTask(title, description) {
     $.ajax({
-      url: 'create.php',
+      url: '../backend/create.php',
       type: 'POST',
       data: {
         title: title,
@@ -72,7 +72,7 @@ $(document).ready(function() {
     console.log(title);
     console.log(description);
     $.ajax({
-      url: 'update.php',
+      url: '../backend/update.php',
       type: 'POST',
       data: {
         id: taskId,
@@ -93,7 +93,7 @@ $(document).ready(function() {
     let li = $(this).closest('li');
     let taskId = li.attr('data-id');
     $.ajax({
-      url: 'delete.php',
+      url: '../backend/delete.php',
       type: 'POST',
       data: {
         id: taskId
