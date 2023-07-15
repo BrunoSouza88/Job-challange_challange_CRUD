@@ -39,17 +39,18 @@ $(document).ready(function() {
   function renderTasks(tasks) {
     $('#task-list').empty();
     tasks.forEach(function(task) {
-      let li = $('<li>').attr('data-id', task.id).addClass('task-item');
-      let title = $('<span>').text(task.title).addClass('task-title');
-      let description = $('<span>').text(task.description).addClass('task-description');
-      let actions = $('<span>');
+      let tr = $('<tr>').attr('data-id', task.id);
+      let title = $('<td>').text(task.title);
+      let description = $('<td>').text(task.description);
+      let actions = $('<td>');
       let editButton = $('<button>').text('Edit').addClass('edit-button task-action');
       let deleteButton = $('<button>').text('Delete').addClass('delete-button task-action');
       actions.append(editButton, deleteButton);
-      li.append(title, description, actions);
-      $('#task-list').append(li);
+      tr.append(title, description, actions);
+      $('#task-list').append(tr);
     });
   }
+  
 
   $(document).on('click', '.edit-button', function() {
     let li = $(this).closest('li');
