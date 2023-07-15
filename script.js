@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  console.log('document ready');
   loadTasks();
   $('#task-form').submit(function(event) {
     event.preventDefault();
@@ -11,7 +10,6 @@ $(document).ready(function() {
   });
 
   function loadTasks() {
-    console.log('loadTasks');
     $.ajax({
       url: 'read.php',
       type: 'GET',
@@ -20,13 +18,11 @@ $(document).ready(function() {
         renderTasks(tasks);
       },
       error: function(_jqXHR, textStatus, errorThrown) {
-        console.log('Error:', textStatus, errorThrown);
       }
     });
   }
 
   function addTask(title, description) {
-    console.log('addTask');
     $.ajax({
       url: 'create.php',
       type: 'POST',
@@ -35,14 +31,12 @@ $(document).ready(function() {
         description: description
       },
       success: function() {
-        console.log('talvez seja aqui?');
         loadTasks();
       }
     });
   }
 
   function renderTasks(tasks) {
-    console.log('renderiza meu filho', tasks);
     $('#task-list').empty();
     tasks.forEach(function(task) {
       let li = $('<li>').attr('data-id', task.id);
@@ -63,12 +57,10 @@ $(document).ready(function() {
     let title = li.find('span').eq(0).text();
     let description = li.find('span').eq(1).text();
     
-    // Preencha os campos de edição diretamente na página
     $('#edit-title').val(title);
     $('#edit-description').val(description);
     $('#edit-task-id').val(taskId);
     
-    // Exiba os campos de edição
     $('#edit-title').show();
     $('#edit-description').show();
     $('#edit-submit').show();
@@ -90,7 +82,6 @@ $(document).ready(function() {
       },
       success: function() {
         loadTasks();
-        // Limpar campos de edição e ocultá-los após atualizar
         $('#edit-title').val('');
         $('#edit-description').val('');
         $('#edit-title').hide();
