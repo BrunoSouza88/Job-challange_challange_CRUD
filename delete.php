@@ -11,8 +11,13 @@ if ($conn->connect_error) {
 }
 
 $taskId = $_POST['id'];
-$sql = "DELETE FROM tasks WHERE id = $taskId";
-$conn->query($sql);
 
+$sql = "DELETE FROM tasks WHERE id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $taskId);
+$stmt->execute();
+
+$stmt->close();
 $conn->close();
 ?>

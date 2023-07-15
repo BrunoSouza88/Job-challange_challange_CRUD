@@ -14,8 +14,13 @@ $taskId = $_POST['id'];
 $title = $_POST['title'];
 $description = $_POST['description'];
 $status = $_POST['status'];
-$sql = "UPDATE tasks SET title = '$title', description = '$description', status = '$status' WHERE id = $taskId";
-$conn->query($sql);
+error_log(print_r($_POST, true));
+$sql = "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?";
 
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sssi", $title, $description, $status, $taskId);
+$stmt->execute();
+
+$stmt->close();
 $conn->close();
 ?>

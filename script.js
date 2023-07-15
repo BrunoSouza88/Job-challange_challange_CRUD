@@ -60,17 +60,17 @@ $(document).ready(function() {
     $('#edit-title').val(title);
     $('#edit-description').val(description);
     $('#edit-task-id').val(taskId);
-    
-    $('#edit-title').show();
-    $('#edit-description').show();
-    $('#edit-submit').show();
   });
 
   $('#edit-form').submit(function(event) {
+    console.log('entrei no submit');
     event.preventDefault();
     let taskId = $('#edit-task-id').val();
     let title = $('#edit-title').val();
     let description = $('#edit-description').val();
+    console.log(taskId);
+    console.log(title);
+    console.log(description);
     $.ajax({
       url: 'update.php',
       type: 'POST',
@@ -81,12 +81,10 @@ $(document).ready(function() {
         status: 'pending'
       },
       success: function() {
+        console.log("consegui atualizar");
         loadTasks();
         $('#edit-title').val('');
         $('#edit-description').val('');
-        $('#edit-title').hide();
-        $('#edit-description').hide();
-        $('#edit-submit').hide();
       }
     });
   });
