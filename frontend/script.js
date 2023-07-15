@@ -39,12 +39,12 @@ $(document).ready(function() {
   function renderTasks(tasks) {
     $('#task-list').empty();
     tasks.forEach(function(task) {
-      let li = $('<li>').attr('data-id', task.id);
-      let title = $('<span>').text(task.title);
-      let description = $('<span>').text(task.description);
+      let li = $('<li>').attr('data-id', task.id).addClass('task-item');
+      let title = $('<span>').text(task.title).addClass('task-title');
+      let description = $('<span>').text(task.description).addClass('task-description');
       let actions = $('<span>');
-      let editButton = $('<button>').text('Edit').addClass('edit-button');
-      let deleteButton = $('<button>').text('Delete').addClass('delete-button');
+      let editButton = $('<button>').text('Edit').addClass('edit-button task-action');
+      let deleteButton = $('<button>').text('Delete').addClass('delete-button task-action');
       actions.append(editButton, deleteButton);
       li.append(title, description, actions);
       $('#task-list').append(li);
