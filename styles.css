@@ -1,9 +1,12 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
 }
 
 h1 {
   text-align: center;
+  color: #333;
 }
 
 form {
@@ -18,4 +21,48 @@ input[type="text"] {
 
 button {
   padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.edit-button, .delete-button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.edit-button:hover, .delete-button:hover {
+  background-color: #555;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
