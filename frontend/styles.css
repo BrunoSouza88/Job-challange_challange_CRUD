@@ -65,6 +65,11 @@ th {
     background-color: #555;
 }
 
+#title-column, #description-column, #actions-column {
+  width: 33.33%;
+}
+
+
 ul, ol {
     list-style: none;
     padding: 0;
