@@ -63,14 +63,10 @@ $(document).ready(function() {
   });
 
   $('#edit-form').submit(function(event) {
-    console.log('entrei no submit');
     event.preventDefault();
     let taskId = $('#edit-task-id').val();
     let title = $('#edit-title').val();
     let description = $('#edit-description').val();
-    console.log(taskId);
-    console.log(title);
-    console.log(description);
     $.ajax({
       url: '../backend/update.php',
       type: 'POST',
@@ -81,7 +77,6 @@ $(document).ready(function() {
         status: 'pending'
       },
       success: function() {
-        console.log("consegui atualizar");
         loadTasks();
         $('#edit-title').val('');
         $('#edit-description').val('');
