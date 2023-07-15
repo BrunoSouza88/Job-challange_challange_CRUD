@@ -50,13 +50,12 @@ $(document).ready(function() {
       $('#task-list').append(tr);
     });
   }
-  
 
   $(document).on('click', '.edit-button', function() {
-    let li = $(this).closest('li');
-    let taskId = li.attr('data-id');
-    let title = li.find('span').eq(0).text();
-    let description = li.find('span').eq(1).text();
+    let tr = $(this).closest('tr');
+    let taskId = tr.attr('data-id');
+    let title = tr.find('td').eq(0).text();
+    let description = tr.find('td').eq(1).text();
     
     $('#edit-title').val(title);
     $('#edit-description').val(description);
@@ -86,8 +85,8 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.delete-button', function() {
-    let li = $(this).closest('li');
-    let taskId = li.attr('data-id');
+    let tr = $(this).closest('tr');
+    let taskId = tr.attr('data-id');
     $.ajax({
       url: '../backend/delete.php',
       type: 'POST',
@@ -95,7 +94,7 @@ $(document).ready(function() {
         id: taskId
       },
       success: function() {
-        li.remove();
+        tr.remove();
       }
     });
   });
