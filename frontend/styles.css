@@ -54,40 +54,35 @@ th {
 }
 
 .edit-button, .delete-button, #edit-submit, [type="submit"] {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
+    background-color:#333
+    color:#fff
+    border:none
+    padding:5px
+    cursor:pointer
 }
 
 .edit-button:hover, .delete-button:hover, #edit-submit:hover, [type="submit"]:hover {
-    background-color: #555;
+    background-color:#555
 }
-
-#title-column, #description-column, #actions-column {
-  width: 33.33%;
-}
-
 
 ul, ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    list-style:none
+    padding:0
+    margin:0
 }
 
 ul li, ol li {
-    display: inline-block;
-    vertical-align: middle;
+    display:inline-block
+    vertical-align:middle
 }
 
 ul li span, ol li span {
-    display: inline-block;
-    vertical-align: middle;
+    display:inline-block
+    vertical-align:middle
 }
 
 .actions {
-    margin: 0;
+    margin:0
 }
 
 .actions button {
@@ -101,3 +96,8 @@ ul li span, ol li span {
 .task-title, .task-description {
     margin-right:10px
 }
+
+#title-column, #description-column, #status-column, #actions-column {
+  width:25%
+}
+

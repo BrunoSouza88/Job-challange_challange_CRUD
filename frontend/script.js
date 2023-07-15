@@ -42,11 +42,18 @@ $(document).ready(function() {
       let tr = $('<tr>').attr('data-id', task.id);
       let title = $('<td>').text(task.title);
       let description = $('<td>').text(task.description);
+      let status = $('<td>');
+      let statusSelect = $('<select>').addClass('status-select');
+      let pendingOption = $('<option>').attr('value', 'pending').text('Pending');
+      let completedOption = $('<option>').attr('value', 'completed').text('Completed');
+      statusSelect.append(pendingOption, completedOption);
+      statusSelect.val(task.status);
+      status.append(statusSelect);
       let actions = $('<td>');
       let editButton = $('<button>').text('Edit').addClass('edit-button task-action');
       let deleteButton = $('<button>').text('Delete').addClass('delete-button task-action');
       actions.append(editButton, deleteButton);
-      tr.append(title, description, actions);
+      tr.append(title, description, status, actions);
       $('#task-list').append(tr);
     });
   }
@@ -95,6 +102,23 @@ $(document).ready(function() {
       },
       success: function() {
         tr.remove();
+      }
+    });
+  });
+
+  $(document).on('change', '.status-select', function() {
+    let tr = $(this).closest('tr');
+    let taskId = tr.attr('data-id');
+    let status = $(this).val();
+    $.ajax({
+      url: '../backend/update.php',
+      type: 'POST',
+      data: {
+        id: taskId,
+        status: status
+      },
+      success: function() {
+        loadTasks();
       }
     });
   });
