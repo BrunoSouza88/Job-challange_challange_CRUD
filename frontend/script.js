@@ -162,7 +162,7 @@ $(document).ready(function () {
   });
 
   function handleDeleteTaskSuccess() {
-    tr.remove();
+    $(this).closest('tr').remove();
   }
 
   $(document).on('change', '.status-select', function () {

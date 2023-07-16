@@ -10,15 +10,15 @@
   <h1>To-Do List</h1>
   
   <form id="task-form">
-    <input type="text" id="title" placeholder="Title" required>
-    <input type="text" id="description" placeholder="Description" required>
+    <input type="text" id="title" name="title" placeholder="Title" required>
+    <input type="text" id="description" name="description" placeholder="Description" required>
     <button type="submit">Add Task</button>
   </form>
 
   <form id="edit-form">
-    <input type="hidden" id="edit-task-id">
-    <input type="text" id="edit-title" placeholder="Title" required>
-    <input type="text" id="edit-description" placeholder="Description" required>
+    <input type="hidden" id="edit-task-id" name="edit-task-id">
+    <input type="text" id="edit-title" name="edit-title" placeholder="Title" required>
+    <input type="text" id="edit-description" name="edit-description" placeholder="Description" required>
     <button type="submit" id="edit-submit">Update Task</button>
   </form>
 
