@@ -43,7 +43,7 @@
   <pre><code>docker-compose up -d</code></pre>
 
   <li>Access the application in your browser at <code>http://127.0.0.1:8080/frontend</code></li>
-
+  <br>
   <li>Once you have used the application, use the following command to stop and remove Docker services: </li>
 
   <pre><code>docker-compose down</code></pre>
