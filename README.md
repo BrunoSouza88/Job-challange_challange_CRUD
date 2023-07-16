@@ -43,30 +43,16 @@
   <pre><code>docker-compose up -d</code></pre>
 
   <li>Access the application in your browser at <code>http://127.0.0.1:8080/frontend</code></li>
+
+  <li>Once you have used the application, use the following command to stop and remove Docker services: </li>
+
+  <pre><code>docker-compose down</code></pre>
 </ol>
 
 <h2>Usage</h2>
 
 <p>The application allows you to manage a to-do list with the following functionalities: create, read, update, and delete tasks. The user interface is simple and intuitive, making it easy to interact with the tasks.</p>
 
-<h2>Additional Instructions</h2>
-
-<p>Please make sure to have Docker and Docker Compose installed before running the project. If you haven't installed them yet, follow the instructions below:</p>
-
-<ul>
-  <li>To install Docker, refer to the <a href="https://docs.docker.com/get-docker/">Docker Documentation</a>.</li>
-  <li>To install Docker Compose, refer to the <a href="https://docs.docker.com/compose/install/">Docker Compose Documentation</a>.</li>
-</ul>
-
-<p>Once Docker and Docker Compose are installed, use the following command to start the Docker services:</p>
-
-<pre><code>docker-compose up -d</code></pre>
-
-<p>Once the services are up and running, access the application in your browser at <code>http://127.0.0.1:8080/frontend </code> to start using it.</p>
-
-<p>Once you have used the application, use the following command to stop and remove Docker services: </p>
-
-<pre><code>docker-compose down</code></pre>
 
 <h2>Contributing</h2>
 
