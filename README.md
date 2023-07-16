@@ -64,6 +64,10 @@
 
 <p>Once the services are up and running, access the application in your browser at <code>http://127.0.0.1:8080/</code> to start using it.</p>
 
+<p>Once Docker and Docker Compose are installed, use the following command to start the Docker services:</p>
+
+<pre><code>docker-compose up -d</code></pre>
+
 <h2>Contributing</h2>
 
 <p>Contributions are welcome! If you would like to contribute to the project, please follow these steps:</p>
