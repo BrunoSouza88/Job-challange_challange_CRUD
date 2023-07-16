@@ -60,15 +60,15 @@ $(document).ready(function () {
 
   function renderTasks(tasks) {
     tasks.sort(function (a, b) {
-      if (a.status === 'completed' && b.status === 'pending') {
+      if (a.status === 'pending' && b.status === 'completed') {
         return -1;
-      } else if (a.status === 'pending' && b.status === 'completed') {
+      } else if (a.status === 'completed' && b.status === 'pending') {
         return 1;
       } else {
         return 0;
       }
     });
-
+  
     $('#task-list').empty();
     tasks.forEach(function (task) {
       const tr = $('<tr>').attr('data-id', task.id);
@@ -89,6 +89,7 @@ $(document).ready(function () {
       $('#task-list').append(tr);
     });
   }
+  
 
   function handleAjaxError(jqXHR, textStatus, errorThrown) {
     showError('An error occurred. Please try again later.');
@@ -156,14 +157,13 @@ $(document).ready(function () {
       data: {
         id: taskId
       },
-      success: handleDeleteTaskSuccess,
+      success: function () {
+        tr.remove();
+        loadTasks();
+      },
       error: handleAjaxError
     });
   });
-
-  function handleDeleteTaskSuccess() {
-    $(this).closest('tr').remove();
-  }
 
   $(document).on('change', '.status-select', function () {
     const tr = $(this).closest('tr');
