@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   loadTasks();
-  $('#task-form').submit(function(event) {
+  $('#task-form').submit(function (event) {
     event.preventDefault();
     let title = $('#title').val();
     let description = $('#description').val();
-    
+
     if (title.length > 50) {
       alert('Title must be less than 50 characters');
       return;
@@ -13,7 +13,7 @@ $(document).ready(function() {
       alert('Description must be less than 1135 characters');
       return;
     }
-    
+
     addTask(title, description);
     $('#title').val('');
     $('#description').val('');
@@ -23,11 +23,11 @@ $(document).ready(function() {
     $.ajax({
       url: '../backend/read.php',
       type: 'GET',
-      success: function(response) {
+      success: function (response) {
         let tasks = JSON.parse(response);
         renderTasks(tasks);
       },
-      error: function(_jqXHR, textStatus, errorThrown) {
+      error: function (_jqXHR, textStatus, errorThrown) {
       }
     });
   }
@@ -40,14 +40,14 @@ $(document).ready(function() {
         title: title,
         description: description
       },
-      success: function() {
+      success: function () {
         loadTasks();
       }
     });
   }
 
   function renderTasks(tasks) {
-    tasks.sort(function(a, b) {
+    tasks.sort(function (a, b) {
       if (a.status === 'completed' && b.status === 'pending') {
         return -1;
       } else if (a.status === 'pending' && b.status === 'completed') {
@@ -56,9 +56,9 @@ $(document).ready(function() {
         return 0;
       }
     });
-    
+
     $('#task-list').empty();
-    tasks.forEach(function(task) {
+    tasks.forEach(function (task) {
       let tr = $('<tr>').attr('data-id', task.id);
       let title = $('<td>').text(task.title);
       let description = $('<td>').text(task.description);
@@ -77,20 +77,34 @@ $(document).ready(function() {
       $('#task-list').append(tr);
     });
   }
-  
 
-  $(document).on('click', '.edit-button', function() {
+
+  $(document).on('click', '.edit-button', function () {
     let tr = $(this).closest('tr');
     let taskId = tr.attr('data-id');
     let title = tr.find('td').eq(0).text();
     let description = tr.find('td').eq(1).text();
-    
-    $('#edit-title').val(title);
-    $('#edit-description').val(description);
+  
+    tr.addClass('highlight');
     $('#edit-task-id').val(taskId);
+    $('#edit-title')
+      .val(title)
+      .addClass('highlight-background');
+    $('#edit-description')
+      .val(description)
+      .addClass('highlight-background');
+  
+    setTimeout(function () {
+      tr.removeClass('highlight');
+      $('#edit-title, #edit-description').removeClass('highlight-background');
+    }, 1000);
+  
+    $('html, body').animate({ scrollTop: 0 }, 500);
   });
+  
+  
 
-  $('#edit-form').submit(function(event) {
+  $('#edit-form').submit(function (event) {
     event.preventDefault();
     let taskId = $('#edit-task-id').val();
     let title = $('#edit-title').val();
@@ -104,7 +118,7 @@ $(document).ready(function() {
         description: description,
         status: 'pending'
       },
-      success: function() {
+      success: function () {
         loadTasks();
         $('#edit-title').val('');
         $('#edit-description').val('');
@@ -112,7 +126,7 @@ $(document).ready(function() {
     });
   });
 
-  $(document).on('click', '.delete-button', function() {
+  $(document).on('click', '.delete-button', function () {
     let tr = $(this).closest('tr');
     let taskId = tr.attr('data-id');
     $.ajax({
@@ -121,13 +135,13 @@ $(document).ready(function() {
       data: {
         id: taskId
       },
-      success: function() {
+      success: function () {
         tr.remove();
       }
     });
   });
 
-  $(document).on('change', '.status-select', function() {
+  $(document).on('change', '.status-select', function () {
     let tr = $(this).closest('tr');
     let taskId = tr.attr('data-id');
     let status = $(this).val();
@@ -138,7 +152,7 @@ $(document).ready(function() {
         id: taskId,
         status: status
       },
-      success: function() {
+      success: function () {
         loadTasks();
       }
     });

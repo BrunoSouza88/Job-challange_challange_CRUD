@@ -39,7 +39,8 @@ table {
   margin-top: 20px;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ccc;
@@ -55,51 +56,53 @@ th {
   justify-content: space-around;
 }
 
-.edit-button, .delete-button {
-  margin: 2px;
+.edit-button,
+.delete-button,
+#edit-submit,
+[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #979494;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 2px;
 }
 
-.edit-button, .delete-button, #edit-submit, [type="submit"] {
-    background-color: #333;
-    color: #fff;
-    border: 1px solid #979494;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 2px;
+.edit-button:hover,
+.delete-button:hover,
+#edit-submit:hover,
+[type="submit"]:hover {
+  background-color: #555;
 }
 
-.edit-button:hover, .delete-button:hover, #edit-submit:hover, [type="submit"]:hover {
-    background-color: #555;
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-ul, ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-ul li, ol li {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-ul li span, ol li span {
-    display: inline-block;
-    vertical-align: middle;
+ul li,
+ol li {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .task-item {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.task-title, .task-description {
-    margin-right: 10px;
+.task-title,
+.task-description {
+  margin-right: 10px;
 }
 
-#title-column, #description-column, #status-column, #actions-column {
+#title-column,
+#description-column,
+#status-column,
+#actions-column {
   width: 25%;
 }
-
 
 @media (max-width: 1024px) {
   input[type="text"] {
@@ -107,23 +110,45 @@ ul li span, ol li span {
     box-sizing: border-box;
   }
 
-  #task-form, #edit-form {
+  #task-form,
+  #edit-form {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #task-form button, #edit-form button {
+  #task-form button,
+  #edit-form button {
     margin-top: 10px;
   }
 }
 
+.highlight-background {
+  background-color: yellow;
+}
+
+.highlight {
+  animation: highlight 1s;
+}
+
+@keyframes highlight {
+  from {
+    background-color: yellow;
+  }
+  to {
+    background-color: white;
+  }
+}
+
 @media (max-width: 768px) {
-  table, th, td {
+  table,
+  th,
+  td {
     font-size: 14px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 5px;
   }
 }
@@ -133,11 +158,14 @@ ul li span, ol li span {
     font-size: 24px;
   }
 
-  table, th, td {
+  table,
+  th,
+  td {
     font-size: 12px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 3px;
   }
 }
