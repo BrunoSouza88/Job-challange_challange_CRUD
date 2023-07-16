@@ -4,6 +4,16 @@ $(document).ready(function() {
     event.preventDefault();
     let title = $('#title').val();
     let description = $('#description').val();
+    
+    if (title.length > 50) {
+      alert('Title must be less than 50 characters');
+      return;
+    }
+    if (description.length > 1135) {
+      alert('Description must be less than 1135 characters');
+      return;
+    }
+    
     addTask(title, description);
     $('#title').val('');
     $('#description').val('');
