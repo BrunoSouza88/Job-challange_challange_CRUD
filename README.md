@@ -42,7 +42,7 @@
 
   <pre><code>docker-compose up -d</code></pre>
 
-  <li>Access the application in your browser at <code>http://127.0.0.1:8080/</code></li>
+  <li>Access the application in your browser at <code>http://127.0.0.1:8080/frontend</code></li>
 </ol>
 
 <h2>Usage</h2>
