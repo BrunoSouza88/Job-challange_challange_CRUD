@@ -64,9 +64,9 @@
 
 <p>Once the services are up and running, access the application in your browser at <code>http://127.0.0.1:8080/</code> to start using it.</p>
 
-<p>Once Docker and Docker Compose are installed, use the following command to start the Docker services:</p>
+<p>Once you have used the application, use the following command to stop and remove Docker services: </p>
 
-<pre><code>docker-compose up -d</code></pre>
+<pre><code>docker-compose down</code></pre>
 
 <h2>Contributing</h2>
 
