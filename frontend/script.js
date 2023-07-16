@@ -1,15 +1,23 @@
 $(document).ready(function () {
+  const MAX_TITLE_LENGTH = 50;
+  const MAX_DESCRIPTION_LENGTH = 1135;
+  const READ_URL = '../backend/read.php';
+  const CREATE_URL = '../backend/create.php';
+  const UPDATE_URL = '../backend/update.php';
+  const DELETE_URL = '../backend/delete.php';
+
   loadTasks();
+
   $('#task-form').submit(function (event) {
     event.preventDefault();
-    let title = $('#title').val();
-    let description = $('#description').val();
+    const title = $('#title').val();
+    const description = $('#description').val();
 
-    if (title.length > 50) {
+    if (title.length > MAX_TITLE_LENGTH) {
       alert('Title must be less than 50 characters');
       return;
     }
-    if (description.length > 1135) {
+    if (description.length > MAX_DESCRIPTION_LENGTH) {
       alert('Description must be less than 1135 characters');
       return;
     }
@@ -21,29 +29,33 @@ $(document).ready(function () {
 
   function loadTasks() {
     $.ajax({
-      url: '../backend/read.php',
+      url: READ_URL,
       type: 'GET',
-      success: function (response) {
-        let tasks = JSON.parse(response);
-        renderTasks(tasks);
-      },
-      error: function (_jqXHR, textStatus, errorThrown) {
-      }
+      success: handleLoadTasksSuccess,
+      error: handleAjaxError
     });
+  }
+
+  function handleLoadTasksSuccess(response) {
+    const tasks = JSON.parse(response);
+    renderTasks(tasks);
   }
 
   function addTask(title, description) {
     $.ajax({
-      url: '../backend/create.php',
+      url: CREATE_URL,
       type: 'POST',
       data: {
         title: title,
         description: description
       },
-      success: function () {
-        loadTasks();
-      }
+      success: handleAddTaskSuccess,
+      error: handleAjaxError
     });
+  }
+
+  function handleAddTaskSuccess() {
+    loadTasks();
   }
 
   function renderTasks(tasks) {
@@ -59,32 +71,40 @@ $(document).ready(function () {
 
     $('#task-list').empty();
     tasks.forEach(function (task) {
-      let tr = $('<tr>').attr('data-id', task.id);
-      let title = $('<td>').text(task.title);
-      let description = $('<td>').text(task.description);
-      let status = $('<td>');
-      let statusSelect = $('<select>').addClass('status-select');
-      let pendingOption = $('<option>').attr('value', 'pending').text('Pending');
-      let completedOption = $('<option>').attr('value', 'completed').text('Completed');
+      const tr = $('<tr>').attr('data-id', task.id);
+      const title = $('<td>').text(task.title);
+      const description = $('<td>').text(task.description);
+      const status = $('<td>');
+      const statusSelect = $('<select>').addClass('status-select');
+      const pendingOption = $('<option>').attr('value', 'pending').text('Pending');
+      const completedOption = $('<option>').attr('value', 'completed').text('Completed');
       statusSelect.append(pendingOption, completedOption);
       statusSelect.val(task.status);
       status.append(statusSelect);
-      let actions = $('<td>');
-      let editButton = $('<button>').text('Edit').addClass('edit-button task-action');
-      let deleteButton = $('<button>').text('Delete').addClass('delete-button task-action');
+      const actions = $('<td>');
+      const editButton = $('<button>').text('Edit').addClass('edit-button task-action');
+      const deleteButton = $('<button>').text('Delete').addClass('delete-button task-action');
       actions.append(editButton, deleteButton);
       tr.append(title, description, status, actions);
       $('#task-list').append(tr);
     });
   }
 
+  function handleAjaxError(jqXHR, textStatus, errorThrown) {
+    showError('An error occurred. Please try again later.');
+    console.error('AJAX Error:', textStatus, errorThrown);
+  }
+
+  function showError(message) {
+    alert('Error: ' + message);
+  }
 
   $(document).on('click', '.edit-button', function () {
-    let tr = $(this).closest('tr');
-    let taskId = tr.attr('data-id');
-    let title = tr.find('td').eq(0).text();
-    let description = tr.find('td').eq(1).text();
-  
+    const tr = $(this).closest('tr');
+    const taskId = tr.attr('data-id');
+    const title = tr.find('td').eq(0).text();
+    const description = tr.find('td').eq(1).text();
+
     tr.addClass('highlight');
     $('#edit-task-id').val(taskId);
     $('#edit-title')
@@ -93,24 +113,22 @@ $(document).ready(function () {
     $('#edit-description')
       .val(description)
       .addClass('highlight-background');
-  
+
     setTimeout(function () {
       tr.removeClass('highlight');
       $('#edit-title, #edit-description').removeClass('highlight-background');
     }, 1000);
-  
+
     $('html, body').animate({ scrollTop: 0 }, 500);
   });
-  
-  
 
   $('#edit-form').submit(function (event) {
     event.preventDefault();
-    let taskId = $('#edit-task-id').val();
-    let title = $('#edit-title').val();
-    let description = $('#edit-description').val();
+    const taskId = $('#edit-task-id').val();
+    const title = $('#edit-title').val();
+    const description = $('#edit-description').val();
     $.ajax({
-      url: '../backend/update.php',
+      url: UPDATE_URL,
       type: 'POST',
       data: {
         id: taskId,
@@ -118,43 +136,52 @@ $(document).ready(function () {
         description: description,
         status: 'pending'
       },
-      success: function () {
-        loadTasks();
-        $('#edit-title').val('');
-        $('#edit-description').val('');
-      }
+      success: handleUpdateTaskSuccess,
+      error: handleAjaxError
     });
   });
 
+  function handleUpdateTaskSuccess() {
+    loadTasks();
+    $('#edit-title').val('');
+    $('#edit-description').val('');
+  }
+
   $(document).on('click', '.delete-button', function () {
-    let tr = $(this).closest('tr');
-    let taskId = tr.attr('data-id');
+    const tr = $(this).closest('tr');
+    const taskId = tr.attr('data-id');
     $.ajax({
-      url: '../backend/delete.php',
+      url: DELETE_URL,
       type: 'POST',
       data: {
         id: taskId
       },
-      success: function () {
-        tr.remove();
-      }
+      success: handleDeleteTaskSuccess,
+      error: handleAjaxError
     });
   });
 
+  function handleDeleteTaskSuccess() {
+    tr.remove();
+  }
+
   $(document).on('change', '.status-select', function () {
-    let tr = $(this).closest('tr');
-    let taskId = tr.attr('data-id');
-    let status = $(this).val();
+    const tr = $(this).closest('tr');
+    const taskId = tr.attr('data-id');
+    const status = $(this).val();
     $.ajax({
-      url: '../backend/update.php',
+      url: UPDATE_URL,
       type: 'POST',
       data: {
         id: taskId,
         status: status
       },
-      success: function () {
-        loadTasks();
-      }
+      success: handleUpdateTaskStatusSuccess,
+      error: handleAjaxError
     });
   });
+
+  function handleUpdateTaskStatusSuccess() {
+    loadTasks();
+  }
 });
