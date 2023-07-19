@@ -10,12 +10,11 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$title = $_POST['title'];
-$description = $_POST['description'];
+$title = mysqli_real_escape_string($conn, $_POST['title']);
+$description = mysqli_real_escape_string($conn, $_POST['description']);
 $status = 'pending';
 
 $sql = "INSERT INTO tasks (title, description, status) VALUES (?, ?, ?)";
-
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $title, $description, $status);
 $stmt->execute();

@@ -10,12 +10,13 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$taskId = $_POST['id'];
-$status = $_POST['status'];
+$taskId = mysqli_real_escape_string($conn, $_POST['id']);
+$status = mysqli_real_escape_string($conn, $_POST['status']);
+
 
 if (isset($_POST['title']) && isset($_POST['description'])) {
-  $title = $_POST['title'];
-  $description = $_POST['description'];
+  $title = mysqli_real_escape_string($conn, $_POST['title']);
+  $description = mysqli_real_escape_string($conn, $_POST['description']);
   $sql = "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("sssi", $title, $description, $status, $taskId);
@@ -29,3 +30,4 @@ $stmt->execute();
 $stmt->close();
 $conn->close();
 ?>
+
