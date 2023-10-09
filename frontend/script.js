@@ -1,8 +1,8 @@
 $(document).ready(function () {
   const MAX_TITLE_LENGTH = 50;
   const MAX_DESCRIPTION_LENGTH = 1135;
-  const READ_URL = '../backend/read.php';
   const CREATE_URL = '../backend/create.php';
+  const READ_URL = '../backend/read.php';
   const UPDATE_URL = '../backend/update.php';
   const DELETE_URL = '../backend/delete.php';
 
